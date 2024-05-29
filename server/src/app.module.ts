@@ -4,6 +4,10 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
+import { AppController } from './app.controller';
+import { FooResolver } from './app.resolver';
+import { AppService } from './app.service';
+import { PetsModule } from './pets/pets/pets.module';
 
 @Module({
   imports: [
@@ -13,18 +17,20 @@ import { join } from 'path';
       port: 3306,
       username: 'root',
       password: 'ks8151504',
-      database: 'test',
+      database: 'reelblend',
       synchronize: true,
       autoLoadEntities: true,
       entities: [],
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      path: '__graphql',
+      playground: true,
       autoSchemaFile: true,
     }),
-    ScheduleModule.forRoot(),
+    PetsModule,
   ],
-  controllers: [],
-  providers: [],
+  // controllers: [AppController],
+  // providers: [AppService],
 })
 export class AppModule {}
